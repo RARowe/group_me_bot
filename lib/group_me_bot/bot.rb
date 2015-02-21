@@ -7,7 +7,7 @@ module GroupMeBot
   class Bot
     attr_accessor :bot_id, :callback_port, :post_uri
     POST_URI = "https://api.groupme.com/v3/bots/post"
-    
+ 
     def initialize(bot_id = nil, callback_port = 8080, post_uri = POST_URI)
       @bot_id        = bot_id
       @callback_port = callback_port
@@ -63,15 +63,24 @@ module GroupMeBot
 
     def run_callback_server(&callback_block)
       Thread.start { callback_server(callback_block) }
-      puts "Callback server running on port #{self.callback_port}"
+      puts "Callback server running on port #{self.callback_port}."
     end
 
     private
     def callback_server(&callback_block)
-      server = TCPServer.new '127.0.0.1', self.callback_port
+      server = TCPServer.new("0.0.0.0", self.callback_port)
       loop do
         Thread.start(server.accept) do |client|
-          
+          res = []
+
+          while line = client.gets
+            res.push(line.chomp)
+          end
+
+          client.close
+          callback_body = JSON.parse(res.last)
+          callback_block.call(callback_body, self)
+          res.clear
         end
       end
     end
