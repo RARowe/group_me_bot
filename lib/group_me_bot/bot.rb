@@ -62,25 +62,22 @@ module GroupMeBot
     end
 
     def run_callback_server(&callback_block)
-      Thread.start { callback_server(callback_block) }
-      puts "Callback server running on port #{self.callback_port}."
-    end
+      Thread.start do
+        server = TCPServer.new("0.0.0.0", self.callback_port)
+        puts "Callback server running on port #{self.callback_port}"
+        loop do
+          Thread.start(server.accept) do |client|
+            res = []
 
-    private
-    def callback_server(&callback_block)
-      server = TCPServer.new("0.0.0.0", self.callback_port)
-      loop do
-        Thread.start(server.accept) do |client|
-          res = []
+            while line = client.gets
+              res.push(line.chomp)
+            end
 
-          while line = client.gets
-            res.push(line.chomp)
+            client.close
+            callback_body = JSON.parse(res.last)
+            callback_block.call(self, callback_body)
+            res.clear
           end
-
-          client.close
-          callback_body = JSON.parse(res.last)
-          callback_block.call(callback_body, self)
-          res.clear
         end
       end
     end
