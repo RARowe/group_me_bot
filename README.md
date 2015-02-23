@@ -30,7 +30,7 @@ Sending a Message/Image/Location
 ```ruby
 require "group_me_bot"
 
-bot = GroupMe
+bot = GroupMeBot::Bot.new "your_bot_id"
 
 bot.send_message "Hello from bot!"
 
