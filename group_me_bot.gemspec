@@ -7,4 +7,5 @@ Gem::Specification.new do |s|
   s.authors     = ["Richard Rowe"]
   s.files       = ["lib/group_me_bot.rb", "lib/group_me_bot/bot.rb"]
   s.email       = "roweprogrammer@gmail.com"
+  s.require_ruby_version = ">= 2.0.0p481"
 end
