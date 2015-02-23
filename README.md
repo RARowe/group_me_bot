@@ -3,26 +3,32 @@ A simple GroupMe bot API for Ruby.
 
 Initializing the bot
 -----------
+'''ruby
 
 	require "group_me_bot"
 
 	bot = GroupMeBot::Bot.new "your_bot_id"
-
+'''
 
 Full Initialization Method Signature
 ---------------------
-	
+
+'''ruby
+
 	class Bot
 		POST_URI = "https://api.groupme.com/v3/bots/post"
 		def initialize(bot_id = nil, callback_port = 8080, post_uri = POST_URI)
 			...
 		end
 	end
+'''
 
 The above signature implies that you can pass a custom port for running the callback server, and a different post URI if needed. The post URI should be unchanging.
 
 Sending a Message/Image/Location
 -----------------
+
+'''ruby
 
 	require "group_me_bot"
 	
@@ -34,10 +40,11 @@ Sending a Message/Image/Location
 
 	# bot.send_location(long, lat, name)
 	bot.send_location -77.035268, 8.889709, "Washington Monument"
-
+'''
 Setting Up Callback Server (for an echo bot)
 ------------
 See [this page](https://dev.groupme.com/tutorials/bots) for groupme.com JSON response details.
+'''ruby
 
 	# bot- Reference to GroupMe Bot
 	# response_body- The JSON response sent from groupme.com
@@ -46,3 +53,4 @@ See [this page](https://dev.groupme.com/tutorials/bots) for groupme.com JSON res
 			bot.send_message response_body["text"]
 		end
 	end
+'''
