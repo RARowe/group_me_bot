@@ -41,7 +41,7 @@ bot.send_location -77.035268, 8.889709, "Washington Monument"
 ```
 Setting Up Callback Server (for an echo bot)
 ------------
-See [this page](https://dev.groupme.com/tutorials/bots) for groupme.com JSON response details.
+See [this page](https://dev.groupme.com/tutorials/bots) for groupme.com JSON response details. For some reason, the responses are currently slow. Using TCPServer to make this work. If someone would like to shed a better way to do it, feel free to make a change.
 
 ```ruby
 # bot- Reference to GroupMe Bot
