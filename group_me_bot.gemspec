@@ -1,4 +1,4 @@
-Gem::Specification do |s|
+Gem::Specification.new do |s|
   s.name        = "group_me_bot"
   s.version     = "0.5.0"
   s.licenses    = ["MIT"]
